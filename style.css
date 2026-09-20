@@ -1,0 +1,14 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.border {
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.padding {
+    padding: 5px;
+}
