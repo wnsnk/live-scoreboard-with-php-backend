@@ -1,7 +1,7 @@
 'use strict';
 
 // Adding teamNames:
-const teamNames = [];
+let teamNames = [];
 
 const teamSubmitBtn = document.querySelector('#addTeam');
 const teamNameInput = document.querySelector('#teamName');
@@ -10,22 +10,32 @@ teamSubmitBtn.addEventListener('click', function () {
     const teamName = teamNameInput.value;
     teamNames.push(teamName);
     teamNameInput.value = '';
-    showTeams()
+    showTeams();
 
 })
 
 // Showing teams:
 
-const showTeamList = document.querySelector('.showTeams');
+const ShowTeamListElement = document.querySelector('.showTeams');
 const saveBtn = document.querySelector('#save');
 
 const showTeams  = function() {
-    showTeamList.innerHTML = '';
+    ShowTeamListElement.innerHTML = '';
     for (let i = 0; i < teamNames.length; i++) {
-        const liElement = document.createElement('li', );
+        const liElement = document.createElement('li');
         liElement.textContent = teamNames[i];
         liElement.className = 'teamNameLi'
-        showTeamList.appendChild(liElement);
+        ShowTeamListElement.appendChild(liElement);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'x';
+        liElement.appendChild(deleteBtn);
+        deleteBtn.addEventListener('click', function() {
+            teamNames.splice(i, 1);
+            showTeams();
+
+
+        })
     }
 }
 
