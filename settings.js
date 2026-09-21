@@ -8,9 +8,15 @@ const teamNameInput = document.querySelector('#teamName');
 
 teamSubmitBtn.addEventListener('click', function () {
     const teamName = teamNameInput.value;
-    teamNames.push(teamName);
-    teamNameInput.value = '';
-    showTeams();
+    if (teamName == '') {
+        alert('Please type in team name.')
+    } else {
+        teamNames.push(teamName);
+        teamNameInput.value = '';
+        showTeams();
+        teamNameInput.focus();
+    }
+
 
 })
 
@@ -41,13 +47,17 @@ const showTeams  = function() {
 
 // Saving Teams:
 saveBtn.addEventListener('click', function() {
-    fetch('api/teamnames.php',
-        {
-            method: 'POST',
-            body: JSON.stringify(teamNames),
-            headers: {'Content-type': 'application/json'},
-        }
-    )
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+    if (teamNames.length >= 2) {
+        fetch('api/teamnames.php',
+            {
+                method: 'POST',
+                body: JSON.stringify(teamNames),
+                headers: {'Content-type': 'application/json'},
+            }
+        )
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+    } else {
+        alert('Add at least 2 teams.')
+    }
 })
