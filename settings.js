@@ -29,13 +29,22 @@ const showTeams  = function() {
     ShowTeamListElement.innerHTML = '';
     for (let i = 0; i < teamNames.length; i++) {
         const liElement = document.createElement('li');
-        liElement.textContent = teamNames[i];
-        liElement.className = 'teamNameLi'
+        liElement.className = 'row';
+        const divElement0 = document.createElement('div');
+        divElement0.className = 'col-11';
+        const h3Element = document.createElement('h3')
+        h3Element.textContent = teamNames[i];
+        divElement0.appendChild(h3Element);
+        liElement.appendChild(divElement0)
         ShowTeamListElement.appendChild(liElement);
 
+        const divElement1 = document.createElement('div');
+        divElement1.className = 'col';
         const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'x';
-        liElement.appendChild(deleteBtn);
+        deleteBtn.textContent = 'X';
+        deleteBtn.className = 'btn btn-danger';
+        divElement1.appendChild(deleteBtn);
+        liElement.appendChild(divElement1);
         deleteBtn.addEventListener('click', function() {
             teamNames.splice(i, 1);
             showTeams();

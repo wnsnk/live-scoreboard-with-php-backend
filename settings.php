@@ -5,42 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="style.css">
+    <?php include('templates/bootstrap.html') ?>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
 </head>
 
-<body>
-    <h1 class="center">Settings</h1>
+<body data-bs-theme="dark">
+    <?php include('templates/header.html') ?>
+    <div class="container">
+        <h1 class="center">Settings</h1>
+    </div>
+
     <hr>
     <!-- ADDING TEAM -->
-    <section>
+    <section class="container">
         <h2 class="center">Add a Team: </h2>
-        <div class="center">
-            <input type="Text" name="teamName" id="teamName" placeholder="Team 1">
-            <button id="addTeam">Add</button>
+        <div class="row">
+            <div class="col-11">
+                <input class="form-control" type="Text" name="teamName" id="teamName" placeholder="Team 1">
+            </div>
+            <div class="col">
+                <button class="btn btn-primary col" id="addTeam">Add</button>
+            </div>
         </div>
     </section>
     <hr>
 
     <!-- SHOWING ALL TEAMS -->
-    <section>
-        <h2 class="center">Teams:</h2>
-        <div class="center">
+    <section class="container">
+        <h2>Teams:</h2>
+        <div>
             <ul class="showTeams">
-
+                <!-- list made in js -->
             </ul>
-
         </div>
-        <div class="center"><button id="saveTeam">Save</button></div>
+        <div>
+            <button class="btn btn-primary" id="saveTeam">Save</button>
+        </div>
     </section>
     <hr>
 
     <!-- CLOCK -->
-    <section>
-        <h2 class="center">Clock</h2>
-        <div class="center">
-
-            <input type="number" name="timeInMinutes" id="timeInMinutes" placeholder="Minutes" min='1'>
-            <button id="saveTime">Save</button>
+    <section class="container">
+        <h2>Clock</h2>
+        <div class="row">
+            <div class="col-11">
+                <input class="form-control" type="number" name="timeInMinutes" id="timeInMinutes" placeholder="Minutes" min='1'>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary" id="saveTime">Save</button>
+            </div>
         </div>
     </section>
     <script src="settings.js"></script>
