@@ -31,7 +31,13 @@ const showTeams  = function() {
 
 // Saving Teams:
 saveBtn.addEventListener('click', function() {
-    document.cookie = `teamNamesArray = ${JSON.stringify(teamNames)}`;
-
-
+    fetch('api/teamnames.php',
+        {
+            method: 'POST',
+            body: JSON.stringify(teamNames),
+            headers: {'Content-type': 'application/json'},
+        }
+    )
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 })
