@@ -8,7 +8,7 @@ const teamNameInput = document.querySelector('#teamName');
 
 teamSubmitBtn.addEventListener('click', function () {
     const teamName = teamNameInput.value;
-    if (teamName == '') {
+    if (!teamName) {
         alert('Please type in team name.')
     } else {
         teamNames.push(teamName);
@@ -23,7 +23,7 @@ teamSubmitBtn.addEventListener('click', function () {
 // Showing teams:
 
 const ShowTeamListElement = document.querySelector('.showTeams');
-const saveBtn = document.querySelector('#save');
+const saveBtnTeam = document.querySelector('#saveTeam');
 
 const showTeams  = function() {
     ShowTeamListElement.innerHTML = '';
@@ -46,7 +46,7 @@ const showTeams  = function() {
 }
 
 // Saving Teams:
-saveBtn.addEventListener('click', function() {
+saveBtnTeam.addEventListener('click', function() {
     if (teamNames.length >= 2) {
         fetch('api/teamnames.php',
             {
@@ -60,4 +60,23 @@ saveBtn.addEventListener('click', function() {
     } else {
         alert('Add at least 2 teams.')
     }
+})
+
+// Clock:
+const saveBtnClock = document.querySelector('#saveTime');
+const clockInput = document.querySelector('#timeInMinutes');
+saveBtnClock.addEventListener('click', function() {
+    timeInMinutes = clockInput.value;
+    if (!timeInMinutes) {
+        alert('This field can\'t be empty!')
+    } else 
+        fetch('api/clock.php',
+            {
+                method: 'POST',
+                body: JSON.stringify(timeInMinutes),
+                headers: {'Content-type': 'application/json'},
+            }
+        )
+        .then((response) => response.json())
+        .then((json) => console.log(json));
 })

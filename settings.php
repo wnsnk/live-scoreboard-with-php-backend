@@ -4,33 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scoreboard</title>
+    <title>Settings</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <h1 class="center">Settings</h1>
-    <!-- ADDING TEAM -->
     <hr>
-    <h2 class="center">Add a Team: </h2>
-    <div class="center">
-        <input type="Text" name="teamName" id="teamName">
-        <button id="addTeam">Add</button>
-    </div>
+    <!-- ADDING TEAM -->
+    <section>
+        <h2 class="center">Add a Team: </h2>
+        <div class="center">
+            <input type="Text" name="teamName" id="teamName" placeholder="Team 1">
+            <button id="addTeam">Add</button>
+        </div>
+    </section>
     <hr>
 
     <!-- SHOWING ALL TEAMS -->
-    <h2 class="center">Teams:</h2>
-    <div class="center">
-        <ul class="showTeams">
+    <section>
+        <h2 class="center">Teams:</h2>
+        <div class="center">
+            <ul class="showTeams">
 
-        </ul>
+            </ul>
 
-    </div>
-    <div class="center"><button id="save">Save</button></div>
+        </div>
+        <div class="center"><button id="saveTeam">Save</button></div>
+    </section>
     <hr>
 
+    <!-- CLOCK -->
+    <section>
+        <h2 class="center">Clock</h2>
+        <div class="center">
 
+            <input type="number" name="timeInMinutes" id="timeInMinutes" placeholder="Minutes" min='1'>
+            <button id="saveTime">Save</button>
+        </div>
+    </section>
     <script src="settings.js"></script>
 </body>
 
