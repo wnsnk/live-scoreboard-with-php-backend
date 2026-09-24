@@ -2,12 +2,12 @@
 
 header('Content-Type: application/json');
 
-$teamNames = json_decode(file_get_contents('php://input'), true);
+$timeInMinutes = json_decode(file_get_contents('php://input'), true);
 $dataJson = file_get_contents('data.json');
 $json_array = json_decode($dataJson, true);
 foreach ($json_array as $key => $value) {
-    if ($key == 'teamNames') {
-        $json_array[$key] = $teamNames;
+    if ($key == 'timeInMinutes') {
+        $json_array[$key] = $timeInMinutes;
     }
 }
 
