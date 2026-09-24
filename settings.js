@@ -1,7 +1,28 @@
 'use strict';
-
-// Adding teamNames:
 let teamNames = [];
+
+async function getData() {
+  const url = "/api/get_settings.php";
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    teamNames = result['teamNames'];
+    showTeams();
+    clockInput.value = result['timeInMinutes']
+    console.log(result);
+    
+    
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+getData();
 
 const teamSubmitBtn = document.querySelector('#addTeam');
 const teamNameInput = document.querySelector('#teamName');
@@ -41,8 +62,7 @@ const showTeams  = function() {
         const divElement1 = document.createElement('div');
         divElement1.className = 'col';
         const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'X';
-        deleteBtn.className = 'btn btn-danger';
+        deleteBtn.className = 'btn-close btn-sm';
         divElement1.appendChild(deleteBtn);
         liElement.appendChild(divElement1);
         deleteBtn.addEventListener('click', function() {
@@ -79,7 +99,7 @@ saveBtnClock.addEventListener('click', function() {
     if (!timeInMinutes) {
         alert('This field can\'t be empty!')
     } else 
-        fetch('api/clock.php',
+        fetch('api/clock_settings.php',
             {
                 method: 'POST',
                 body: JSON.stringify(timeInMinutes),

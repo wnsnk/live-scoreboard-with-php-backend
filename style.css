@@ -12,3 +12,7 @@
 .padding {
     padding: 5px;
 }
+
+.bigText {
+    font-size: 100px;
+}

@@ -10,6 +10,10 @@
 
 <body data-bs-theme="dark">
     <?php include('templates/header.html') ?>
+    <br>
+
+    <?php include('templates/clock.php') ?>
+    <?php include('templates/scoreboard.php') ?>
 </body>
 
 </html>
