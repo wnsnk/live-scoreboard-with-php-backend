@@ -10,20 +10,17 @@
                 <div class="col">
                     <h2 class="bigText">:</h2>
                 </div>
-                <div id='seconds' class="col">
-                    <h2 class="bigText">00</h2>
+                <div class="col">
+                    <h2 id="seconds" class="bigText">00</h2>
                 </div>
             </div>
             <!-- BUTTONS -->
-            <div class="row border">
+            <div class="row">
                 <div class="col">
-                    <button class="btn btn-primary">start</button>
+                    <button id="start" class="btn btn-primary">Start</button>
                 </div>
                 <div class="col">
-                    <button class="btn btn-secondary">pause</button>
-                </div>
-                <div class="col">
-                    <button class="btn btn-secondary">stop</button>
+                    <button id='stop' class="btn btn-danger">Stop</button>
                 </div>
             </div>
 
