@@ -2,24 +2,22 @@
 let teamNames = [];
 
 async function getData() {
-  const url = "/api/get_settings.php";
+    const url = '/api/GET/settings.php';
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        teamNames = result['teamNames'];
+        showTeams();
+        clockInput.value = result['timeInMinutes'];
+        console.log(result);
+    } catch (error) {
+        console.error(error.message);
     }
-
-    const result = await response.json();
-    teamNames = result['teamNames'];
-    showTeams();
-    clockInput.value = result['timeInMinutes']
-    console.log(result);
-    
-    
-  } catch (error) {
-    console.error(error.message);
-  }
 }
 
 getData();
@@ -30,33 +28,31 @@ const teamNameInput = document.querySelector('#teamName');
 teamSubmitBtn.addEventListener('click', function () {
     const teamName = teamNameInput.value;
     if (!teamName) {
-        alert('Please type in team name.')
+        alert('Please type in team name.');
     } else {
         teamNames.push(teamName);
         teamNameInput.value = '';
         showTeams();
         teamNameInput.focus();
     }
-
-
-})
+});
 
 // Showing teams:
 
 const ShowTeamListElement = document.querySelector('.showTeams');
 const saveBtnTeam = document.querySelector('#saveTeam');
 
-const showTeams  = function() {
+const showTeams = function () {
     ShowTeamListElement.innerHTML = '';
     for (let i = 0; i < teamNames.length; i++) {
         const liElement = document.createElement('li');
         liElement.className = 'row';
         const divElement0 = document.createElement('div');
         divElement0.className = 'col-11';
-        const h3Element = document.createElement('h3')
+        const h3Element = document.createElement('h3');
         h3Element.textContent = teamNames[i];
         divElement0.appendChild(h3Element);
-        liElement.appendChild(divElement0)
+        liElement.appendChild(divElement0);
         ShowTeamListElement.appendChild(liElement);
 
         const divElement1 = document.createElement('div');
@@ -65,47 +61,41 @@ const showTeams  = function() {
         deleteBtn.className = 'btn-close btn-sm';
         divElement1.appendChild(deleteBtn);
         liElement.appendChild(divElement1);
-        deleteBtn.addEventListener('click', function() {
+        deleteBtn.addEventListener('click', function () {
             teamNames.splice(i, 1);
             showTeams();
-
-
-        })
+        });
     }
-}
+};
 
 // Saving Teams:
-saveBtnTeam.addEventListener('click', function() {
+saveBtnTeam.addEventListener('click', function () {
     if (teamNames.length >= 2) {
-        fetch('api/teamnames.php',
-            {
-                method: 'POST',
-                body: JSON.stringify(teamNames),
-                headers: {'Content-type': 'application/json'},
-            }
-        )
-        .then((response) => response.json())
-        .then((json) => console.log(json));
+        fetch('api/POST/teamnames.php', {
+            method: 'POST',
+            body: JSON.stringify(teamNames),
+            headers: { 'Content-type': 'application/json' },
+        })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
     } else {
-        alert('Add at least 2 teams.')
+        alert('Add at least 2 teams.');
     }
-})
+});
 
 // Clock:
 const saveBtnClock = document.querySelector('#saveTime');
 const clockInput = document.querySelector('#timeInMinutes');
-saveBtnClock.addEventListener('click', function() {
+saveBtnClock.addEventListener('click', function () {
     timeInMinutes = clockInput.value;
     if (!timeInMinutes) {
-        alert('This field can\'t be empty!')
-    } else 
-        fetch('api/clock_settings.php',
-            {
-                method: 'POST',
-                body: JSON.stringify(timeInMinutes),
-                headers: {'Content-type': 'application/json'},
-            }
-        )
-        .then((response) => response.json())
-        .then((json) => console.log(json));
-})
+        alert("This field can't be empty!");
+    } else
+        fetch('api/POST/clock_settings.php', {
+            method: 'POST',
+            body: JSON.stringify(timeInMinutes),
+            headers: { 'Content-type': 'application/json' },
+        })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+});

@@ -13,6 +13,7 @@
     <br>
 
     <?php include('templates/clock.php') ?>
+    <br>
     <?php include('templates/scoreboard.php') ?>
 </body>
 

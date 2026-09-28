@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$data = file_get_contents('data.json');
+$data = file_get_contents(__DIR__ . '/../db/data.json');
 
 
 echo $data;
