@@ -28,4 +28,4 @@
     </div>
 
 </section>
-<script src="templates/clock.js"></script>
+<script type="module" src="templates/clock copy.js"></script>
