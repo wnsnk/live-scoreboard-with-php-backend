@@ -1,5 +1,7 @@
 'use strict';
 
+import { updateScore } from '../modules/update_score.js';
+
 async function getTeamsAndScores() {
     const url = '/api/GET/teamsAndScores.php';
     try {
@@ -13,7 +15,7 @@ async function getTeamsAndScores() {
         const containerDiv = document.querySelector('#appendRow');
         let rowDiv = document.querySelector('#appendTeams');
         let newRowCount = 0;
-        for (let team in result) {
+        for (let teamId in result) {
             if (newRowCount == 4) {
                 newRowCount = 0;
                 rowDiv = document.createElement('div');
@@ -37,14 +39,14 @@ async function getTeamsAndScores() {
             cardDiv.appendChild(cardBodyDiv);
 
             const scoreH2 = document.createElement('h2');
-            scoreH2.className = 'bigText text-center';
-            scoreH2.textContent = result[team]['score'];
-            scoreH2.id = `scoreTeam${team}`;
+            scoreH2.className = 'display-1 text-center';
+            scoreH2.textContent = result[teamId]['score'];
+            scoreH2.id = `scoreTeam${teamId}`;
             cardBodyDiv.appendChild(scoreH2);
 
             const cardTitle = document.createElement('h5');
             cardTitle.className = 'card-title text-center';
-            cardTitle.textContent = result[team]['name'];
+            cardTitle.textContent = result[teamId]['name'];
             cardBodyDiv.appendChild(cardTitle);
 
             const btnDiv = document.createElement('div');
@@ -61,6 +63,8 @@ async function getTeamsAndScores() {
                 buttonElement.textContent = `+${i}`;
                 buttonElement.addEventListener('click', function () {
                     scoreH2.textContent = Number(scoreH2.textContent) + i;
+
+                    updateScore(Number(teamId), Number(scoreH2.textContent));
                 });
                 btnColDiv.appendChild(buttonElement);
             }
@@ -73,7 +77,7 @@ async function getTeamsAndScores() {
             decreaseScoreBtn.textContent = '-1';
             decreaseScoreBtn.addEventListener('click', function () {
                 scoreH2.textContent = Number(scoreH2.textContent) - 1;
-                console.log(team);
+                updateScore(Number(teamId), Number(scoreH2.textContent));
             });
             btnColDiv.appendChild(decreaseScoreBtn);
 

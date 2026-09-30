@@ -13,7 +13,7 @@ const stopBtn = document.querySelector('#stop');
 let isRunning = false;
 
 let timeInMinutes = 0;
-let timeInMs, timeInSeconds;
+let timeInMs;
 
 // TODO: RELOADING PAGE REMOVES AROUND 1.5 MINUTES FROM CLOCK?
 
@@ -46,8 +46,10 @@ async function getData() {
             convertGetItemStringToBool(sessionStorage.getItem('isRunning'))
         ) {
             const now = new Date(Number(sessionStorage.getItem('now')));
+
             let countDownDate = now.getTime() + timeInMs;
-            countDownDate = new Date(countDownDate);
+            console.log(countDownDate);
+            // countDownDate = new Date(countDownDate);
             startBtn.textContent = 'Pause';
             startCountDown(countDownDate);
         }
@@ -64,8 +66,12 @@ async function getData() {
             const now = new Date(Number(sessionStorage.getItem('now')));
 
             // CALCULATE COUNTDOWN DATE
+            if (sessionStorage.getItem('timeInMs')) {
+                timeInMs = sessionStorage.getItem('timeInMs');
+            }
             let countDownDate = now.getTime() + timeInMs;
-            countDownDate = new Date(countDownDate);
+
+            console.log(countDownDate);
 
             sessionStorage.setItem('isRunning', true);
             startCountDown(countDownDate);
@@ -73,6 +79,7 @@ async function getData() {
             startBtn.textContent = 'Pause';
         } else {
             sessionStorage.setItem('isRunning', false);
+            sessionStorage.removeItem('now');
             startBtn.textContent = 'Start';
             // TO DO FIX PAUSING TIMER
         }
@@ -112,6 +119,9 @@ const startCountDown = function (countDownDate) {
 
             const msLeft = countDownDate - now;
             sessionStorage.setItem('msLeft', msLeft);
+
+            console.log(countDownDate);
+            console.log(msLeft);
         } else {
             clearInterval(countDown);
         }

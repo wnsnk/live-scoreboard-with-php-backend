@@ -5,13 +5,13 @@
             <!-- clock border -->
             <div class="border rounded row text-center justify-content-center">
                 <div class="col">
-                    <h2 id='minutes' class="bigText">00</h2>
+                    <h2 id='minutes' class="display-1">00</h2>
                 </div>
                 <div class="col">
-                    <h2 class="bigText">:</h2>
+                    <h2 class="display-1">:</h2>
                 </div>
                 <div class="col">
-                    <h2 id="seconds" class="bigText">00</h2>
+                    <h2 id="seconds" class="display-1">00</h2>
                 </div>
             </div>
             <!-- BUTTONS -->
@@ -28,4 +28,4 @@
     </div>
 
 </section>
-<script type="module" src="templates/clock copy.js"></script>
+<script type="module" src="templates/clock.js"></script>

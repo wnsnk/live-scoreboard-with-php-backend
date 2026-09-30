@@ -12,3 +12,4 @@ foreach ($json_array as $key => $value) {
 }
 
 file_put_contents(__DIR__ . '/../db/data.json', json_encode($json_array));
+unlink(__DIR__ . '/../db/teamsAndScores.json');

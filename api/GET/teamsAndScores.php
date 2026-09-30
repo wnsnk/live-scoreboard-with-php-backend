@@ -4,7 +4,6 @@ $fileName = __DIR__ . '/../db/teamsAndScores.json';
 
 
 if (!file_exists($fileName)) {
-
     $dataFileName = __DIR__ . '/../db/data.json';
     if (!file_exists($dataFileName)) {
         file_put_contents($fileName, json_encode(["teamNames" => ["Team 1", "Team 2"], "timeInMinutes" => "10"]));
@@ -19,6 +18,7 @@ if (!file_exists($fileName)) {
     }
 
     $data = file_put_contents($fileName, json_encode($tempList));
+} else {
 }
 
 $data = file_get_contents($fileName);

@@ -1,5 +1,7 @@
 'use strict';
 
+import { addZeroToTime } from '../modules/small_functions.js';
+
 const minutes = document.querySelector('#minutes');
 const startBtn = document.querySelector('#start');
 const stopBtn = document.querySelector('#stop');
@@ -46,14 +48,6 @@ async function getData() {
 
 getData();
 
-const addZeroToTime = function (num) {
-    if (num < 10) {
-        return `0${num}`;
-    } else {
-        return num;
-    }
-};
-
 function startTimer() {
     let minutes, seconds;
     const interval = setInterval(function () {
@@ -77,11 +71,3 @@ function startTimer() {
         }
     }, 1000);
 }
-
-const reverseBool = function (value) {
-    if (value) {
-        return false;
-    } else {
-        return true;
-    }
-};
