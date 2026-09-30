@@ -24,8 +24,18 @@ getData();
 
 const teamSubmitBtn = document.querySelector('#addTeam');
 const teamNameInput = document.querySelector('#teamName');
+teamNameInput.focus();
 
 teamSubmitBtn.addEventListener('click', function () {
+    addTeam();
+});
+teamNameInput.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        addTeam();
+    }
+});
+
+const addTeam = function () {
     const teamName = teamNameInput.value;
     if (!teamName) {
         alert('Please type in team name.');
@@ -35,7 +45,7 @@ teamSubmitBtn.addEventListener('click', function () {
         showTeams();
         teamNameInput.focus();
     }
-});
+};
 
 // Showing teams:
 
