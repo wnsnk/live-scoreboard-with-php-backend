@@ -1,6 +1,9 @@
 'use strict';
 
 import { updateScore } from '../modules/update_score.js';
+import HistoryWriter from '../modules/write_history.js';
+
+const writeHistory = new HistoryWriter();
 
 async function getTeamsAndScores() {
     const url = '/api/GET/teamsAndScores.php';
@@ -65,6 +68,11 @@ async function getTeamsAndScores() {
                     scoreH2.textContent = Number(scoreH2.textContent) + i;
 
                     updateScore(Number(teamId), Number(scoreH2.textContent));
+                    writeHistory.documentScoreChange(
+                        result[teamId]['name'],
+                        Number(scoreH2.textContent),
+                        i,
+                    );
                 });
                 btnColDiv.appendChild(buttonElement);
             }
@@ -78,6 +86,11 @@ async function getTeamsAndScores() {
             decreaseScoreBtn.addEventListener('click', function () {
                 scoreH2.textContent = Number(scoreH2.textContent) - 1;
                 updateScore(Number(teamId), Number(scoreH2.textContent));
+                writeHistory.documentScoreChange(
+                    result[teamId]['name'],
+                    Number(scoreH2.textContent),
+                    -1,
+                );
             });
             btnColDiv.appendChild(decreaseScoreBtn);
 

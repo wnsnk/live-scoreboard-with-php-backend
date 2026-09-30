@@ -1,4 +1,8 @@
 'use strict';
+
+import HistoryWriter from './modules/write_history.js';
+const writeHistory = new HistoryWriter();
+
 let teamNames = [];
 
 async function getData() {
@@ -41,6 +45,7 @@ const addTeam = function () {
         alert('Please type in team name.');
     } else {
         teamNames.push(teamName);
+        writeHistory.documentTeamAdded(teamName);
         teamNameInput.value = '';
         showTeams();
         teamNameInput.focus();
@@ -72,6 +77,7 @@ const showTeams = function () {
         divElement1.appendChild(deleteBtn);
         liElement.appendChild(divElement1);
         deleteBtn.addEventListener('click', function () {
+            writeHistory.documentTeamRemoved(teamNames[i]);
             teamNames.splice(i, 1);
             showTeams();
         });
@@ -81,6 +87,7 @@ const showTeams = function () {
 // Saving Teams:
 saveBtnTeam.addEventListener('click', function () {
     if (teamNames.length >= 2) {
+        writeHistory.documentTeamsSaved();
         fetch('api/POST/teamnames.php', {
             method: 'POST',
             body: JSON.stringify(teamNames),
@@ -98,6 +105,7 @@ const saveBtnClock = document.querySelector('#saveTime');
 const clockInput = document.querySelector('#timeInMinutes');
 saveBtnClock.addEventListener('click', function () {
     timeInMinutes = clockInput.value;
+    writeHistory.documentTimerSaved(timeInMinutes);
     if (!timeInMinutes) {
         alert("This field can't be empty!");
     } else

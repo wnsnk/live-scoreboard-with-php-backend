@@ -57,7 +57,7 @@
             </div>
         </div>
     </section>
-    <script src="settings.js"></script>
+    <script type="module" src="settings.js"></script>
 </body>
 
 </html>

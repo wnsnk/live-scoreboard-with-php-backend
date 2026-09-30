@@ -1,6 +1,8 @@
 'use strict';
 
 import { addZeroToTime } from '../modules/small_functions.js';
+import HistoryWriter from '../modules/write_history.js';
+const writeHistory = new HistoryWriter();
 
 const minutes = document.querySelector('#minutes');
 const startBtn = document.querySelector('#start');
@@ -30,6 +32,7 @@ async function getData() {
         if (!isRunning) {
             isRunning = true;
             startBtn.textContent = 'Pause';
+            writeHistory.documentTimerStart(addZeroToTime(timeInMinutes), '00');
             startTimer();
         } else {
             isRunning = false;
@@ -38,6 +41,7 @@ async function getData() {
     });
 
     stopBtn.addEventListener('click', function () {
+        writeHistory.documentTimerReset();
         isRunning = false;
         startBtn.textContent = 'Start';
         timeInSeconds = Number(timeInMinutes) * 60;
@@ -65,6 +69,11 @@ function startTimer() {
 
             if (--timeInSeconds < 0) {
                 timeInSeconds = 0;
+            }
+            if (minutes < 0 && seconds < 0) {
+                writeHistory.documentTimerEnd(timeInMinutes);
+                // TODO DOES NOT WORK
+                clearInterval(interval);
             }
         } else {
             clearInterval(interval);
