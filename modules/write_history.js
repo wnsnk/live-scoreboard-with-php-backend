@@ -45,7 +45,7 @@ export default class HistoryWriter {
 
     createObject(msg) {
         return {
-            time: new Date(),
+            time: new Date().getTime(),
             message: msg,
         };
     }
