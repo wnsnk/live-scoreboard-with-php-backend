@@ -14,7 +14,6 @@ let isRunning = false;
 
 let timeInMinutes = 0;
 let timeInMs;
-
 // TODO: RELOADING PAGE REMOVES AROUND 1.5 MINUTES FROM CLOCK?
 
 async function getData() {
@@ -27,7 +26,7 @@ async function getData() {
             throw new Error(`Response status: ${response.status}`);
         }
         const result = await response.json();
-
+        timeInMinutes = Number(result['timeInMinutes']);
         // SET DISPLAY TIME
         if (sessionStorage.getItem('msLeft')) {
             timeInMs = Number(sessionStorage.getItem('msLeft'));
@@ -37,7 +36,7 @@ async function getData() {
             displaySeconds.textContent = addZeroToTime(timeLeftArray[1]);
         } else {
             timeInMs = Number(result['timeInMs']);
-            timeInMinutes = Number(result['timeInMinutes']);
+
             displayMinutes.textContent = addZeroToTime(timeInMinutes);
         }
         // CHECK IF CLOCK IS SUPPOSED TO BE RUNNING
@@ -45,41 +44,48 @@ async function getData() {
             sessionStorage.getItem('now') &&
             convertGetItemStringToBool(sessionStorage.getItem('isRunning'))
         ) {
-            const now = new Date(Number(sessionStorage.getItem('now')));
+            // const oldNow = Number(sessionStorage.getItem('now'));
+            const oldNow = new Date().getTime();
 
-            let countDownDate = now.getTime() + timeInMs;
-            console.log(countDownDate);
-            // countDownDate = new Date(countDownDate);
+            // console.log('oldNow', oldNow);
+            // console.log('timeInMs', convertMsToMinutesAndSeconds(timeInMs));
+            const countDownDateMs = oldNow + timeInMs;
+            // console.log(countDownDateMs / 1000);
             startBtn.textContent = 'Pause';
-            startCountDown(countDownDate);
+            startCountDown(countDownDateMs);
         }
     } catch (error) {
         console.error(error.message);
     }
     // START/PAUSE AND STOP BUTTONS
     startBtn.addEventListener('click', function () {
+        console.log('click start');
         if (!convertGetItemStringToBool(sessionStorage.getItem('isRunning'))) {
             // IF SESSION-ITEM NOW DOES NOT EXIST. CREATE IT.
             if (!sessionStorage.getItem('now')) {
                 sessionStorage.setItem('now', new Date().getTime());
             }
-            const now = new Date(Number(sessionStorage.getItem('now')));
+            const oldNowDateMs = Number(sessionStorage.getItem('now'));
+            console.log(oldNowDateMs);
 
             // CALCULATE COUNTDOWN DATE
-            if (sessionStorage.getItem('timeInMs')) {
-                timeInMs = sessionStorage.getItem('timeInMs');
-            }
-            let countDownDate = now.getTime() + timeInMs;
 
-            console.log(countDownDate);
+            if (sessionStorage.getItem('msLeft')) {
+                timeInMs = Number(sessionStorage.getItem('msLeft'));
+                console.log(timeInMs);
+            }
+            console.log('timeInMs', timeInMs);
+            let countDownDateMs = oldNowDateMs + timeInMs;
+
+            console.log(countDownDateMs);
 
             sessionStorage.setItem('isRunning', true);
-            startCountDown(countDownDate);
+            startCountDown(countDownDateMs);
 
             startBtn.textContent = 'Pause';
         } else {
             sessionStorage.setItem('isRunning', false);
-            sessionStorage.removeItem('now');
+            // sessionStorage.removeItem('now');
             startBtn.textContent = 'Start';
             // TO DO FIX PAUSING TIMER
         }
@@ -93,6 +99,7 @@ async function getData() {
 
         // RESET DISPLAY AND BUTTON
         startBtn.textContent = 'Start';
+        // console.log(timeInMinutes);
         displayMinutes.textContent = addZeroToTime(timeInMinutes);
         displaySeconds.textContent = '00';
     });
@@ -105,7 +112,11 @@ const startCountDown = function (countDownDate) {
     const countDown = setInterval(function () {
         if (convertGetItemStringToBool(sessionStorage.getItem('isRunning'))) {
             const now = new Date().getTime();
+            // console.log('now:', typeof now, now);
+            // console.log('countDownDate:', typeof countDownDate, countDownDate);
+
             let distance = countDownDate - now;
+            // console.log('distance:', convertMsToMinutesAndSeconds(distance));
 
             minutes = addZeroToTime(
                 Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
@@ -113,15 +124,12 @@ const startCountDown = function (countDownDate) {
             seconds = addZeroToTime(
                 Math.floor((distance % (1000 * 60)) / 1000),
             );
-
+            // console.log(`${minutes}:${seconds}`);
             displayMinutes.textContent = minutes;
             displaySeconds.textContent = seconds;
 
-            const msLeft = countDownDate - now;
-            sessionStorage.setItem('msLeft', msLeft);
-
-            console.log(countDownDate);
-            console.log(msLeft);
+            sessionStorage.setItem('msLeft', distance);
+            console.log(Number(sessionStorage.getItem('msLeft')) / 1000);
         } else {
             clearInterval(countDown);
         }

@@ -14,7 +14,7 @@ foreach ($json_array as $key => $value) {
     if ($key == 'timeInMinutes') {
         $json_array[$key] = $timeInMinutes;
     } elseif ($key == 'timeInMs') {
-        $json_array[$key] = $todayPlusTimeMs;
+        $json_array[$key] = $timeInMinutes * 60000;
     }
 }
 
