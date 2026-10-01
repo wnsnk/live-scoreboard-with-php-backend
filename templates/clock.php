@@ -5,22 +5,16 @@
             <!-- clock border -->
             <div class="border rounded row text-center justify-content-center">
                 <div class="col">
-                    <h2 id='minutes' class="display-1">00</h2>
-                </div>
-                <div class="col">
-                    <h2 class="display-1">:</h2>
-                </div>
-                <div class="col">
-                    <h2 id="seconds" class="display-1">00</h2>
+                    <h2 id='time' class="display-1">00:00</h2>
                 </div>
             </div>
             <!-- BUTTONS -->
-            <div class="row">
-                <div class="col">
+            <div class="row g-0 mt-2">
+                <div class="col-md-2">
                     <button id="start" class="btn btn-primary">Start</button>
                 </div>
-                <div class="col">
-                    <button id='stop' class="btn btn-danger">Stop</button>
+                <div class="col-md-2 offset-md-8 text-end">
+                    <button id='stop' class="btn btn-danger">Reset</button>
                 </div>
             </div>
 
@@ -28,4 +22,4 @@
     </div>
 
 </section>
-<script type="module" src="templates/clock copy.js"></script>
+<script type="module" src="templates/clock.js"></script>

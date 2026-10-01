@@ -21,11 +21,11 @@
     <section class="container">
         <h2 class="center">Add a Team: </h2>
         <div class="row">
-            <div class="col-11">
+            <div class="col-md-10">
                 <input class="form-control" type="Text" name="teamName" id="teamName" placeholder="Team 1">
             </div>
-            <div class="col">
-                <button class="btn btn-primary col" id="addTeam">Add</button>
+            <div class="col-md-2">
+                <button class="btn btn-primary" id="addTeam">Add</button>
             </div>
         </div>
     </section>
@@ -49,7 +49,7 @@
     <section class="container">
         <h2>Clock</h2>
         <div class="row">
-            <div class="col-11">
+            <div class="col-md-10">
                 <input class="form-control" type="number" name="timeInMinutes" id="timeInMinutes" placeholder="Minutes" min='1'>
             </div>
             <div class="col">

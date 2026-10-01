@@ -1,82 +1,107 @@
-'use strict';
+import {
+    addZeroToTime,
+    convertGetItemStringToBool,
+    convertMsToMinutesAndSeconds,
+} from '../modules/small_functions.js';
 
-import { addZeroToTime } from '../modules/small_functions.js';
-import HistoryWriter from '../modules/write_history.js';
-const writeHistory = new HistoryWriter();
+('use strict');
 
-const minutes = document.querySelector('#minutes');
+const displayTime = document.querySelector('#time');
 const startBtn = document.querySelector('#start');
 const stopBtn = document.querySelector('#stop');
-let isRunning = false;
+
 let timeInMinutes = 0;
-let timeInSeconds;
+let timeInMs;
 
 async function getData() {
     const url = '/api/GET/settings.php';
 
     try {
+        // GETTING SETTINGS FROM DATA.JSON
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
-
         const result = await response.json();
-        timeInMinutes = result['timeInMinutes'];
-        timeInSeconds = Number(timeInMinutes) * 60;
-        minutes.textContent = addZeroToTime(timeInMinutes);
+        timeInMinutes = Number(result['timeInMinutes']);
+        // SET DISPLAY TIME
+        if (sessionStorage.getItem('msLeft')) {
+            timeInMs = Number(sessionStorage.getItem('msLeft'));
+            let timeLeftArray = convertMsToMinutesAndSeconds(timeInMs);
+
+            displayTime.textContent = addZeroToTime(
+                `${timeLeftArray[0]}:${timeLeftArray[1]}`,
+            );
+        } else {
+            timeInMs = Number(result['timeInMs']);
+
+            displayTime.textContent = `${addZeroToTime(timeInMinutes)}:00`;
+        }
+        // CHECK IF CLOCK IS SUPPOSED TO BE RUNNING
+        if (convertGetItemStringToBool(sessionStorage.getItem('isRunning'))) {
+            const now = new Date().getTime();
+
+            const countDownDateMs = now + timeInMs;
+            startBtn.textContent = 'Pause';
+            startCountDown(countDownDateMs);
+        }
     } catch (error) {
         console.error(error.message);
     }
-
+    // START/PAUSE AND STOP BUTTONS
     startBtn.addEventListener('click', function () {
-        if (!isRunning) {
-            isRunning = true;
+        if (!convertGetItemStringToBool(sessionStorage.getItem('isRunning'))) {
+            const now = new Date().getTime();
+
+            // CALCULATE COUNTDOWN DATE
+            if (sessionStorage.getItem('msLeft')) {
+                timeInMs = Number(sessionStorage.getItem('msLeft'));
+            }
+            let countDownDateMs = now + timeInMs;
+
+            sessionStorage.setItem('isRunning', true);
+            startCountDown(countDownDateMs);
+
             startBtn.textContent = 'Pause';
-            writeHistory.documentTimerStart(addZeroToTime(timeInMinutes), '00');
-            startTimer();
         } else {
-            isRunning = false;
+            sessionStorage.setItem('isRunning', false);
             startBtn.textContent = 'Start';
         }
     });
 
     stopBtn.addEventListener('click', function () {
-        writeHistory.documentTimerReset();
-        isRunning = false;
+        // RESET SESSION STORAGE
+        sessionStorage.removeItem('now');
+        sessionStorage.removeItem('msLeft');
+        sessionStorage.setItem('isRunning', false);
+
+        // RESET DISPLAY AND BUTTON
         startBtn.textContent = 'Start';
-        timeInSeconds = Number(timeInMinutes) * 60;
-        minutes.textContent = addZeroToTime(timeInMinutes);
-        document.querySelector('#seconds').textContent = '00';
+        displayTime.textContent = `${addZeroToTime(timeInMinutes)}:00`;
     });
 }
 
 getData();
 
-function startTimer() {
+const startCountDown = function (countDownDate) {
     let minutes, seconds;
-    const interval = setInterval(function () {
-        if (isRunning) {
-            minutes = parseInt(timeInSeconds / 60, 10);
-            seconds = parseInt(timeInSeconds % 60, 10);
+    const countDown = setInterval(function () {
+        if (convertGetItemStringToBool(sessionStorage.getItem('isRunning'))) {
+            const now = new Date().getTime();
 
-            minutes = addZeroToTime(minutes);
-            seconds = addZeroToTime(seconds);
+            let distance = countDownDate - now;
 
-            const displayMinutes = document.querySelector('#minutes');
-            const displaySeconds = document.querySelector('#seconds');
-            displayMinutes.textContent = minutes;
-            displaySeconds.textContent = seconds;
+            minutes = addZeroToTime(
+                Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+            );
+            seconds = addZeroToTime(
+                Math.floor((distance % (1000 * 60)) / 1000),
+            );
+            displayTime.textContent = `${minutes}:${seconds}`;
 
-            if (--timeInSeconds < 0) {
-                timeInSeconds = 0;
-            }
-            if (minutes < 0 && seconds < 0) {
-                writeHistory.documentTimerEnd(timeInMinutes);
-                // TODO DOES NOT WORK
-                clearInterval(interval);
-            }
+            sessionStorage.setItem('msLeft', distance);
         } else {
-            clearInterval(interval);
+            clearInterval(countDown);
         }
     }, 1000);
-}
+};
