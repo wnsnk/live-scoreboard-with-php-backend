@@ -30,7 +30,7 @@ export const convertGetItemStringToBool = function (getItemString) {
  */
 export const convertMsToMinutesAndSeconds = function (ms) {
     const totalSeconds = ms / 1000;
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = Math.floor(totalSeconds - minutes * 60);
+    const minutes = addZeroToTime(Math.floor(totalSeconds / 60));
+    const seconds = addZeroToTime(Math.floor(totalSeconds - minutes * 60));
     return [minutes, seconds];
 };

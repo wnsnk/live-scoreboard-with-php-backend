@@ -29,9 +29,7 @@ async function getData() {
             timeInMs = Number(sessionStorage.getItem('msLeft'));
             let timeLeftArray = convertMsToMinutesAndSeconds(timeInMs);
 
-            displayTime.textContent = addZeroToTime(
-                `${timeLeftArray[0]}:${timeLeftArray[1]}`,
-            );
+            displayTime.textContent = `${timeLeftArray[0]}:${timeLeftArray[1]}`;
         } else {
             timeInMs = Number(result['timeInMs']);
 
