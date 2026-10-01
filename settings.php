@@ -50,13 +50,14 @@
         <h2>Clock</h2>
         <div class="row">
             <div class="col-md-10">
-                <input class="form-control" type="number" name="timeInMinutes" id="timeInMinutes" placeholder="Minutes" min='1'>
+                <input class="form-control" type="number" name="timeInMinutes" id="timeInMinutes" placeholder="Minutes" min='1' max='60'>
             </div>
             <div class="col">
                 <button class="btn btn-primary" id="saveTime">Save</button>
             </div>
         </div>
     </section>
+    <?php include('templates/footer.html') ?>
     <script type="module" src="settings.js"></script>
 </body>
 

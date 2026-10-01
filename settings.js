@@ -108,7 +108,10 @@ saveBtnClock.addEventListener('click', function () {
     writeHistory.documentTimerSaved(timeInMinutes);
     if (!timeInMinutes) {
         alert("This field can't be empty!");
-    } else
+    } else {
+        sessionStorage.removeItem('now');
+        sessionStorage.removeItem('msLeft');
+        sessionStorage.setItem('isRunning', false);
         fetch('api/POST/clock_settings.php', {
             method: 'POST',
             body: JSON.stringify(timeInMinutes),
@@ -116,4 +119,5 @@ saveBtnClock.addEventListener('click', function () {
         })
             .then((response) => response.json())
             .then((json) => console.log(json));
+    }
 });

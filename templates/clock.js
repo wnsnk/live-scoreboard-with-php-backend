@@ -100,6 +100,13 @@ const startCountDown = function (countDownDate) {
             displayTime.textContent = `${minutes}:${seconds}`;
 
             sessionStorage.setItem('msLeft', distance);
+
+            if (distance < 0) {
+                displayTime.textContent = '00:00';
+                const audio = new Audio('dragon-studio-bell-ring.mp3');
+                audio.play();
+                clearInterval(countDown);
+            }
         } else {
             clearInterval(countDown);
         }

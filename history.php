@@ -25,6 +25,7 @@
         <div id="history" class=""></div>
 
     </section>
+    <?php include('templates/footer.html') ?>
 
     <script src="history.js"></script>
 </body>
