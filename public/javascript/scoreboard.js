@@ -1,7 +1,8 @@
 'use strict';
 
-import { updateScore } from '../modules/update_score.js';
-import HistoryWriter from '../modules/write_history.js';
+import { updateScore } from './modules/update_score.js';
+import HistoryWriter from './modules/write_history.js';
+
 let columns;
 const writeHistory = new HistoryWriter();
 

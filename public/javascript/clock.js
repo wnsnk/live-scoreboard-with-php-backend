@@ -2,7 +2,7 @@ import {
     addZeroToTime,
     convertGetItemStringToBool,
     convertMsToMinutesAndSeconds,
-} from '../modules/small_functions.js';
+} from './modules/small_functions.js';
 
 ('use strict');
 

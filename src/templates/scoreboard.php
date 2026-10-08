@@ -6,7 +6,7 @@
         <br>
     </div>
 </section>
-<script type="module" src="templates/scoreboard.js"></script>
+<script type="module" src="javascript/scoreboard.js"></script>
 
 <?php
 $data = file_get_contents('api/db/data.json');
