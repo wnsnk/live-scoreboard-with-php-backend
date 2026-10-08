@@ -8,7 +8,7 @@ import {
 
 const displayTime = document.querySelector('#time');
 const startBtn = document.querySelector('#start');
-const stopBtn = document.querySelector('#stop');
+const resetBtn = document.querySelector('#stop');
 
 let timeInMinutes = 0;
 let timeInMs;
@@ -67,9 +67,8 @@ async function getData() {
         }
     });
 
-    stopBtn.addEventListener('click', function () {
+    resetBtn.addEventListener('click', function () {
         // RESET SESSION STORAGE
-        sessionStorage.removeItem('now');
         sessionStorage.removeItem('msLeft');
         sessionStorage.setItem('isRunning', false);
 
@@ -101,6 +100,8 @@ const startCountDown = function (countDownDate) {
 
             if (distance < 0) {
                 displayTime.textContent = '00:00';
+                sessionStorage.removeItem('msLeft');
+                sessionStorage.setItem('isRunning', false);
                 const audio = new Audio('dragon-studio-bell-ring.mp3');
                 audio.play();
                 clearInterval(countDown);
