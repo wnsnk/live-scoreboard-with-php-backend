@@ -17,7 +17,7 @@ git clone https://github.com/wnsnk/live-scoreboard-with-php-backend.git
 ```bash
 
 cd live-scoreboard-with-php-backend
-php -S localhost:8000
+php -S localhost:8000 -t public
 ```
 
 php will start a local server where the app is hosted.
