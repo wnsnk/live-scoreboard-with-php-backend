@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="style.css">
 <section class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
@@ -22,4 +21,5 @@
     </div>
 
 </section>
-<script type="module" src="templates/clock.js"></script>
+
+<script type="module" src="javascript/clock.js"></script>

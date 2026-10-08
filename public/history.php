@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History</title>
-    <?php include('templates/bootstrap.html') ?>
+    <?php include('../src/templates/bootstrap.html') ?>
 </head>
 
 <body data-bs-theme="dark">
-    <?php include('templates/header.html') ?>
+    <?php include('../src/templates/header.html') ?>
     <section class="container">
         <h1>History</h1>
 
@@ -25,9 +25,9 @@
         <div id="history" class=""></div>
 
     </section>
-    <?php include('templates/footer.html') ?>
+    <?php include('../src/templates/footer.html') ?>
 
-    <script src="history.js"></script>
+    <script src="javascript/history.js"></script>
 </body>
 
 </html>

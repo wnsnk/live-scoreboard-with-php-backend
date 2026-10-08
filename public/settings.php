@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <?php include('templates/bootstrap.html') ?>
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <?php include('../src/templates/bootstrap.html') ?>
+
 
 </head>
 
 <body data-bs-theme="dark">
-    <?php include('templates/header.html') ?>
+    <?php include('../src/templates/header.html') ?>
     <div class="container">
         <h1 class="center">Settings</h1>
     </div>
@@ -57,8 +57,8 @@
             </div>
         </div>
     </section>
-    <?php include('templates/footer.html') ?>
-    <script type="module" src="settings.js"></script>
+    <?php include('../src/templates/footer.html') ?>
+    <script type="module" src="javascript/settings.js"></script>
 </body>
 
 </html>
